@@ -1,0 +1,29 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResXManager.VSMac", "ResXManager.VSMac\ResXManager.VSMac.csproj", "{9C7F3818-B00F-4CFE-A5C6-C83F88361BC4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResXManager.Model", "ResXManager.Model\ResXManager.Model.csproj", "{27F5575E-2DD9-448B-AD5E-0CA6506852AD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResXManager.Infrastructure", "ResXManager.Infrastructure\ResXManager.Infrastructure.csproj", "{5BCE9295-9C09-4D1A-8163-527E95EAFDAA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9C7F3818-B00F-4CFE-A5C6-C83F88361BC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C7F3818-B00F-4CFE-A5C6-C83F88361BC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C7F3818-B00F-4CFE-A5C6-C83F88361BC4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C7F3818-B00F-4CFE-A5C6-C83F88361BC4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27F5575E-2DD9-448B-AD5E-0CA6506852AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27F5575E-2DD9-448B-AD5E-0CA6506852AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27F5575E-2DD9-448B-AD5E-0CA6506852AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27F5575E-2DD9-448B-AD5E-0CA6506852AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5BCE9295-9C09-4D1A-8163-527E95EAFDAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5BCE9295-9C09-4D1A-8163-527E95EAFDAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5BCE9295-9C09-4D1A-8163-527E95EAFDAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5BCE9295-9C09-4D1A-8163-527E95EAFDAA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
