@@ -5,10 +5,4 @@
   <ItemGroup>
     <PackageReference Include="MonoDevelop.Addins" Version="0.4.7" />
   </ItemGroup>
-  <ItemGroup>
-    <AddinReference Include="MonoDevelop.GtkCore" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="UI\" />
-  </ItemGroup>
 </Project>
