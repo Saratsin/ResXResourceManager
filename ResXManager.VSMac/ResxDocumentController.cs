@@ -165,6 +165,7 @@ namespace ResXManager.VSMac
 
             var listView = new ListView(source)
             {
+                SelectionMode = SelectionMode.None,
                 Columns =
                 {
                     new ListViewColumn("Ein", new TextCellView(firstField) { Editable = true })
