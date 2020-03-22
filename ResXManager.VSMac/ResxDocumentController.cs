@@ -2,9 +2,10 @@
 using MonoDevelop.Components;
 using MonoDevelop.Core;
 using MonoDevelop.Ide.Gui.Documents;
+using ResXManager.Model;
 using System;
-using System.IO;
-using System.Text.RegularExpressions;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xwt;
 using Xwt.Drawing;
@@ -15,140 +16,27 @@ namespace ResXManager.VSMac
 	{
         private readonly Action<ResxDocumentController> _onClosedAction;
 
-        private string[] _collection =
-        {
-            "Часом буває так, що хочеш, почути",
-            "Речі, яких ніколи б, не знати",
-            "І тягне за руку, тебе в то, місце",
-            "Де думаєш, краще б, очей не мати",
-            "Ти дивишся в кухні, на кран, і на воду",
-            "А правда, нізвідки, не виходить",
-            "І дивляться, в очі, тобі знайомі",
-            "І їхні, очі, тобі говорять",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Часом буває, так, що в магазині",
-            "Ти хочеш, крикнути, Ну в чому я винна",
-            "Тебе окидають, розуміючим, оком",
-            "Що дуже болить, хоча й, ненароком",
-            "І ти ростеш, старієш, вмираєш",
-            "А тої, правди, так і не знаєш",
-            "Боїшся її, і від неї, втікаєш",
-            "І в стінах, своїх ти одна, засинаєш",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Часом буває так, що хочеш, почути",
-            "Речі, яких ніколи б, не знати",
-            "І тягне за руку, тебе в то, місце",
-            "Де думаєш, краще б, очей не мати",
-            "Ти дивишся в кухні, на кран, і на воду",
-            "А правда, нізвідки, не виходить",
-            "І дивляться, в очі, тобі знайомі",
-            "І їхні, очі, тобі говорять",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Часом буває, так, що в магазині",
-            "Ти хочеш, крикнути, Ну в чому я винна",
-            "Тебе окидають, розуміючим, оком",
-            "Що дуже болить, хоча й, ненароком",
-            "І ти ростеш, старієш, вмираєш",
-            "А тої, правди, так і не знаєш",
-            "Боїшся її, і від неї, втікаєш",
-            "І в стінах, своїх ти одна, засинаєш",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Часом буває так, що хочеш, почути",
-            "Речі, яких ніколи б, не знати",
-            "І тягне за руку, тебе в то, місце",
-            "Де думаєш, краще б, очей не мати",
-            "Ти дивишся в кухні, на кран, і на воду",
-            "А правда, нізвідки, не виходить",
-            "І дивляться, в очі, тобі знайомі",
-            "І їхні, очі, тобі говорять",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Часом буває, так, що в магазині",
-            "Ти хочеш, крикнути, Ну в чому я винна",
-            "Тебе окидають, розуміючим, оком",
-            "Що дуже болить, хоча й, ненароком",
-            "І ти ростеш, старієш, вмираєш",
-            "А тої, правди, так і не знаєш",
-            "Боїшся її, і від неї, втікаєш",
-            "І в стінах, своїх ти одна, засинаєш",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Часом буває так, що хочеш, почути",
-            "Речі, яких ніколи б, не знати",
-            "І тягне за руку, тебе в то, місце",
-            "Де думаєш, краще б, очей не мати",
-            "Ти дивишся в кухні, на кран, і на воду",
-            "А правда, нізвідки, не виходить",
-            "І дивляться, в очі, тобі знайомі",
-            "І їхні, очі, тобі говорять",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Часом буває, так, що в магазині",
-            "Ти хочеш, крикнути, Ну в чому я винна",
-            "Тебе окидають, розуміючим, оком",
-            "Що дуже болить, хоча й, ненароком",
-            "І ти ростеш, старієш, вмираєш",
-            "А тої, правди, так і не знаєш",
-            "Боїшся її, і від неї, втікаєш",
-            "І в стінах, своїх ти одна, засинаєш",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема",
-            "Спи, собі, сама",
-            "Коли, біля тебе, мене нема"
-        };
+        private List<List<string>> _data;
 
         protected override Task OnLoad(bool reloading)
         {
+            var resourceManager = Extension.Instance.Container.GetExportedValue<ResourceManager>();
+            resourceManager.Reload();
+
+            var entries = resourceManager.TableEntries;
+            var cultures = resourceManager.Cultures;
+
+            _data = entries.Select(entry =>
+            {
+                return cultures.Select(culture =>
+                {
+                    return entry.Values[culture.Culture?.Name];
+
+                }).Prepend(entry.Key).ToList();
+            })
+            .Prepend(cultures.Select(culture => culture.Culture?.DisplayName ?? "Neutral").Prepend("Key").ToList())
+            .ToList();
+
             return base.OnLoad(reloading);
         }
 
@@ -171,39 +59,30 @@ namespace ResXManager.VSMac
             };
             mainBox.PackStart(toolBox);
 
-            var firstField = new DataField<string>();
-            var secondField = new DataField<string>();
-            var thirdField = new DataField<string>();
-
-            var source = new ListStore(firstField, secondField, thirdField);
-            foreach(var rowString in _collection)
+            var dataEnumerator = _data.GetEnumerator();
+            dataEnumerator.MoveNext();
+            var fieldsData = dataEnumerator.Current;
+            var fields = fieldsData.Select(fieldData => new DataField<string>()).ToArray();
+            var source = new ListStore(fields);
+            while (dataEnumerator.MoveNext())
             {
-                var index = source.AddRow();
-                var rowItems = rowString.Split(',');
-                source.SetValue(index, firstField, rowItems[0]);
-                source.SetValue(index, secondField, rowItems[1]);
-                source.SetValue(index, thirdField, rowItems[2]);
+                var rowData = dataEnumerator.Current;
+                var rowIndex = source.AddRow();
+                var columnIndex = 0;
+                foreach(var field in fields)
+                {
+                    source.SetValue(rowIndex, field, rowData[columnIndex++]);
+                }
             }
 
-            var listView = new ListView(source)
+            var listView = new ListView(source) { SelectionMode = SelectionMode.None,  ExpandHorizontal = false };
+
+            for (var i = 0; i < fieldsData.Count; ++i)
             {
-                SelectionMode = SelectionMode.None,
-                Columns =
-                {
-                    new ListViewColumn("Ein", new TextCellView(firstField) { Editable = true })
-                    {
-                        CanResize = true
-                    },
-                    new ListViewColumn("Zwei", new TextCellView(secondField) { Editable = true })
-                    {
-                        CanResize = true
-                    },
-                    new ListViewColumn("Drei", new TextCellView(thirdField) { Editable = true })
-                    {
-                        CanResize = true
-                    }
-                }
-            };
+                var cellView = new TextCellView(fields[i]) { Editable = true};
+                var listViewColumn = new ListViewColumn(fieldsData[i], cellView) { CanResize = true };
+                listView.Columns.Add(listViewColumn);
+            }
 
             mainBox.PackStart(listView, true, true);
             return new XwtControl(mainBox);
