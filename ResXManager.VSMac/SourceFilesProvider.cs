@@ -1,52 +1,54 @@
 ﻿using JetBrains.Annotations;
-using ResXManager.Infrastructure;
+using MonoDevelop.Ide;
 using ResXManager.Model;
-using System;
 using System.Collections.Generic;
 using System.Composition;
-using System.IO;
-using System.Text.RegularExpressions;
-
+using System.Linq;
+using TomsToolbox.Composition;
 
 namespace ResXManager.VSMac
 {
-    [Export]
     [Export(typeof(ISourceFilesProvider))]
-    internal class SourceFilesProvider : ISourceFilesProvider, IFileFilter
+    internal class SourceFilesProvider : ISourceFilesProvider
     {
-        [CanBeNull]
-        private Regex _fileExclusionFilter;
-        [CanBeNull]
-        public string SolutionFolder { get; set; }
-        [CanBeNull]
-        public string ExclusionFilter { get; set; }
+        private readonly IExportProvider _exportProvider;
+        private readonly Configuration _configuration;
 
-        public IList<ProjectFile> SourceFiles
+        [ImportingConstructor]
+        public SourceFilesProvider([NotNull] IExportProvider exportProvider, [NotNull] Configuration configuration)
+        {
+            _exportProvider = exportProvider;
+            _configuration = configuration;
+        }
+
+        public IList<ProjectFile> SourceFiles => DteSourceFiles.ToList().AsReadOnly();
+
+        [CanBeNull]
+        public string SolutionFolder => "";// Solution.SolutionFolder;
+
+        [NotNull, ItemNotNull]
+        private IEnumerable<ProjectFile> DteSourceFiles
         {
             get
             {
-                var folder = SolutionFolder;
-                if (string.IsNullOrEmpty(folder))
-                    return Array.Empty<ProjectFile>();
-
-                _fileExclusionFilter = ExclusionFilter.TryCreateRegex();
-
-                return new DirectoryInfo(folder).GetAllSourceFiles(this);
+                var fileFilter = new FileFilter(_configuration);
+                return GetProjectFiles(fileFilter);
             }
         }
 
         public void Invalidate()
         {
+            //Solution.Invalidate();
         }
 
-        public bool IsSourceFile(ProjectFile file)
+        //[NotNull, ItemNotNull]
+        private IEnumerable<ProjectFile> GetProjectFiles(IFileFilter fileFilter)
         {
-            return false;
+            return Enumerable.Empty<ProjectFile>();
+            //return Solution.GetProjectFiles(fileFilter);
         }
 
-        public bool IncludeFile(ProjectFile file)
-        {
-            return _fileExclusionFilter?.IsMatch(file.RelativeFilePath) != true;
-        }
+        //[NotNull]
+        //private DteSolution Solution => _exportProvider.GetExportedValue<DteSolution>();
     }
 }
